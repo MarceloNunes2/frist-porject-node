@@ -14,6 +14,9 @@ app.use(express.json())
      DELETE =>Deletar informações do back-end
 
      MIDDLEWARE => INTERCEPTADOR =. tem o poder de parar ou alterar dados de requisição
+
+
+     TRATAMENTO DE ERROS (TRY CATCH)
 */
 
 
@@ -39,12 +42,18 @@ app.get("/users",(request,response) => {
     return response.json(users)
 })
 app.post("/users",(request,response) => {
+    try{
     const {name, age} =request.body
-
+    if(age < 18  )throw new Error("Only Allowed user over 18 years old")
     const user = { id: uuid.v4(), name, age}
 
     users. push(user)
     return response.status(201).json(user)
+    }catch(err){
+        return response.status(400).json({error:"Proibido menores"})
+    }finally{
+        console.log("Terminou tudo")
+    }
 })
 app.put("/users/:id",chekUserId,(request,response) => {
 
