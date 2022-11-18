@@ -1,9 +1,14 @@
-const { request, response } = require("express")
+
+
 const express = require("express")
 const uuid = require("uuid")
+const cors = require(`cors`)
 const port = 3001
 const app = express()
 app.use(express.json())
+app.use(cors())
+
+
 /*  
      Query params = > meusite.com/user?nome=marcelo&age=28  //FILTROS
      Route params => /users/2   BUSCAR. DELETE OU ATUALIZAR ALGO ESPECIFICO
@@ -51,8 +56,6 @@ app.post("/users",(request,response) => {
     return response.status(201).json(user)
     }catch(err){
         return response.status(400).json({error:"Proibido menores"})
-    }finally{
-        console.log("Terminou tudo")
     }
 })
 app.put("/users/:id",chekUserId,(request,response) => {
